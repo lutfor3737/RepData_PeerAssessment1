@@ -69,6 +69,9 @@ WeekPart <- function(date)
         "weekday"
     }
 }
+
+# added week part
+
 data$WeekPart <- as.factor(sapply(data$date, WeekPart))
 
 
