@@ -98,10 +98,18 @@ the dataset.
 ```r
 StepPerDay <- aggregate(steps ~ date,data,sum,na.rm=TRUE)$steps
 MeanSteps <- mean(StepPerDay)
+MeanSteps  
+<!-- [1] 10766.19 -->
 MedianSteps <- median (StepPerDay)
+MedianSteps
+<!-- [1] 10765 -->
 hist(StepPerDay)
 barplot(data$steps, names.arg = data$date, xlab = "Date", ylab = "Number of steps")
+
+
 ```
+
+![Sample panel plot](instructions_fig/barstepperday.png) 
 
 ### What is the average daily activity pattern?
 
@@ -114,8 +122,10 @@ StepsByInterval <- aggregate(steps ~ interval, data, mean,na.rm=TRUE)
 plot(StepsByInterval$steps, type = "l")
 
 which.max(StepsByInterval$steps)
+<!-- [1] 104 -->
 
 ```
+![Sample panel plot](instructions_fig/dailypattern.png) 
 
 ### Imputing missing values
 
@@ -135,14 +145,25 @@ missing data on the estimates of the total daily number of steps?
 
 ```r
 sum(is.na(data$steps))
+<!-- [1] 2304 -->
+
 FilledData <- data
 FilledData[is.na(FilledData$steps), "steps"] <- mean(na.omit(FilledData$steps))
 StepPerDayFilled <- aggregate(steps ~ date,FilledData,sum,na.rm=TRUE)$steps
 hist(StepPerDayFilled)
 barplot(FilledData$steps, names.arg = FilledData$date, xlab = "Date", ylab = "Number of steps")
 MeanStepsNAFilled <- mean(StepPerDayFilled)
+MeanStepsNAFilled
+<!-- [1] 10766.19 -->
+
+
 MedianStepsNaFilled <- median(StepPerDayFilled)
+MedianStepsNaFilled
+<!-- [1] 10766.19 -->
+
 ```
+
+![Sample panel plot](instructions_fig/impute.png) 
 
 ### Are there differences in activity patterns between weekdays and weekends?
 
@@ -179,7 +200,7 @@ for (type in c("weekend", "weekday"))
 
 ```
 
-![Sample panel plot](instructions_fig/sample_panelplot.png) 
+![Sample panel plot](instructions_fig/daytype.png) 
 
 
 **Your plot will look different from the one above** because you will
