@@ -8,18 +8,72 @@ output:
 
 ## Loading and preprocessing the data
 
-
+data <- read.csv(unz("activity.zip", "activity.csv"))
 
 ## What is mean total number of steps taken per day?
 
+
+StepPerDay <- aggregate(steps ~ date,data,sum,na.rm=TRUE)$steps
+MeanSteps <- mean(StepPerDay)
+MedianSteps <- median (StepPerDay)
+hist(StepPerDay)
+barplot(data$steps, names.arg = data$date, xlab = "Date", ylab = "Number of steps")
 
 
 ## What is the average daily activity pattern?
 
 
+StepsByInterval <- aggregate(steps ~ interval, data, mean,na.rm=TRUE)
+plot(StepsByInterval$steps, type = "l")
+
+which.max(StepsByInterval$steps)
 
 ## Imputing missing values
 
 
+sum(is.na(data$steps))
+FilledData <- data
+FilledData[is.na(FilledData$steps), "steps"] <- mean(na.omit(FilledData$steps))
+StepPerDayFilled <- aggregate(steps ~ date,FilledData,sum,na.rm=TRUE)$steps
+hist(StepPerDayFilled)
+barplot(FilledData$steps, names.arg = FilledData$date, xlab = "Date", ylab = "Number of steps")
+MeanStepsNAFilled <- mean(StepPerDayFilled)
+MedianStepsNaFilled <- median(StepPerDayFilled)
+
+
+
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+
+WeekPart <- function(date) 
+{
+    if (weekdays(as.Date(date)) %in% c("Saturday", "Sunday")) 
+    {
+        "weekend"
+    } 
+    else 
+    {
+        "weekday"
+    }
+}
+data$WeekPart <- as.factor(sapply(data$date, WeekPart))
+
+
+par(mfrow = c(1, 2))
+for (type in c("weekend", "weekday")) 
+{
+    steps.type <- aggregate(steps ~ interval, data, subset = data$WeekPart == type, FUN = mean)
+    plot(steps.type, type = "l", main = type)
+}
+
+
+
+
+
+
+
+
+
+
+
