@@ -62,13 +62,17 @@ MedianStepsNaFilled
 ```r
 WeekPart <- function(date) 
 {
-    if (weekdays(as.Date(date)) %in% c("Saturday", "Sunday")) 
+    DayVal <- weekdays(as.Date(date))
+
+
+    if (DayVal %in% c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")) 
     {
-        "weekend"
+        "weekday"
+        
     } 
     else 
     {
-        "weekday"
+        "weekend"
     }
 }
 
