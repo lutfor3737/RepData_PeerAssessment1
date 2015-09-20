@@ -177,33 +177,6 @@ the dataset with the filled-in missing values for this part.
 
 
 ```r
-WeekPart <- function(date) 
-{
-    DayVal <- weekdays(as.Date(date))
-
-
-    if (DayVal %in% c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")) 
-    {
-        "weekday"
-        
-    } 
-    else 
-    {
-        "weekend"
-    }
-}
-
-# added week part
-
-data$WeekPart <- as.factor(sapply(data$date, WeekPart))
-
-
-par(mfrow = c(1, 2))
-for (type in c("weekend", "weekday")) 
-{
-    steps.type <- aggregate(steps ~ interval, data, subset = data$WeekPart == type, FUN = mean)
-    plot(steps.type, type = "l", main = type)
-}
 
 
 ```
